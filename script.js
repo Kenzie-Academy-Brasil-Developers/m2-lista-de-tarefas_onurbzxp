@@ -1,23 +1,25 @@
 const tasks = [
-  {title:"Comprar comida para o gato", type: "Urgente"},
-  {title:"Consertar Computador", type: "Importante"},
-  {title:"Beber água", type: "Normal"},
-  {title:"Enviar relatório trimestral", type: 'Importante'},
-  {title:"Fazer exercícios físicos", type: "Normal"},
-  {title:"Agendar consulta médica", type: "Urgente"},
-  {title:"Ler pelo menos um capítulo de um livro", type: "Normal"},
-  {title:"Limpar a despensa", type: "Importante"},
-  {title:"Pagar a conta de energia", type: "Urgente"},
-  {title:"Assistir a um documentário interessante", type: "Normal"},
+  { title: "Comprar comida para o gato", type: "Urgente" },
+  { title: "Consertar Computador", type: "Importante" },
+  { title: "Beber água", type: "Normal" },
+  { title: "Enviar relatório trimestral", type: 'Importante' },
+  { title: "Fazer exercícios físicos", type: "Normal" },
+  { title: "Agendar consulta médica", type: "Urgente" },
+  { title: "Ler pelo menos um capítulo de um livro", type: "Normal" },
+  { title: "Limpar a despensa", type: "Importante" },
+  { title: "Pagar a conta de energia", type: "Urgente" },
+  { title: "Assistir a um documentário interessante", type: "Normal" },
 ];
 
-document.querySelector('.form__button--add-task').addEventListener('click', function(event) {
+document.querySelector('.form__button--add-task').addEventListener('click', function (event) {
   event.preventDefault(); // Impede o formulário de ser submetido
   const taskTitle = document.getElementById('input_title').value;
-  const taskType = document.querySelector('.form__input--priority').value;
+  let taskType = document.querySelector('.form__input--priority').value;
+
+  taskType = taskType.toUpperCase();
 
   if (taskTitle && taskType) {
-    const newTask = { title: taskTitle, type: taskType.toUpperCase() };
+    const newTask = { title: taskTitle, type: taskType };
     tasks.push(newTask);
     renderElements(tasks); // Atualiza a lista de tarefas
   } else {
@@ -26,6 +28,8 @@ document.querySelector('.form__button--add-task').addEventListener('click', func
 });
 
 function createTaskItem(task) {
+
+
   const li = document.createElement('li');
   li.className = 'task__item';
 
@@ -45,8 +49,10 @@ function createTaskItem(task) {
   button.className = 'task__button--remove-task';
   button.textContent = '🗑️';
   button.onclick = function () {
-    li.remove();
+    removeTaskFromList(task.title);
   };
+
+
 
   div.appendChild(span);
   div.appendChild(p);
@@ -54,6 +60,14 @@ function createTaskItem(task) {
   li.appendChild(button);
 
   return li;
+}
+
+function removeTaskFromList(title) {
+  const index = tasks.findIndex(task => task.title === title);
+  if (index > -1) {
+    tasks.splice(index, 1);
+    renderElements(tasks);
+  }
 }
 
 function renderElements(tasks) {

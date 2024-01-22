@@ -111,11 +111,11 @@ body {
     margin-right: 8px;
 }
 
-.span-urgent {
+.span-urgente {
     background-color: #e40404;
 }
 
-.span-important {
+.span-importante {
     background-color: #f3a703;
 }
 
